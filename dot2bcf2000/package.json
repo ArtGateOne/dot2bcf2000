@@ -1,0 +1,26 @@
+{
+  "name": "dot2bcf2000",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "dot2bcf2000.js",
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtGateOne/dot2bcf2000.git"
+  },
+  "keywords": [
+    "none"
+  ],
+  "author": "ArtGateOne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArtGateOne/dot2bcf2000/issues"
+  },
+  "homepage": "https://github.com/ArtGateOne/dot2bcf2000#readme",
+  "dependencies": {
+    "easymidi": "^2.1.0",
+    "websocket": "^1.0.34"
+  }
+}
