@@ -19,12 +19,12 @@ Download and unpack my code
 Run dot2 - go to settings and turn on web remote (password remote)
 
 
-connect bcf200 and run i Mackie mode
+connect bcf2000 and run i Mackie mode
 
 
 Turn off
 Push and hold left 2 button
-Turn on bcf300
+Turn on bcf2000
 click exit (to exit from setup)
 
 
@@ -33,15 +33,15 @@ click exit (to exit from setup)
 -------------------
 
 
-U can run from icon (need change default tool to open dot2bcf200 file to node from nodejs installed folder)
+U can run from icon (need change default tool to open dot2bcf2000 file to node from nodejs installed folder)
 
-USE RMB - open with - and seleck node.exe from c program files / nodejs folder
+USE RMB - open with - and select node.exe from c program files / nodejs folder
 
 
 
 ------------------------------------
 
-U can RUN my code from command promt
+U can RUN my code from command promt too
 
 Open command promt (win+R CMD)
 
@@ -86,17 +86,23 @@ Top buttons
 
 executors TOP OR BOTTOM *(selectable)
 
+
+
+
 Buttons on the right
 
 
 Group (not used) - only one button is use to fast switch to TOP Executors
 
 
+
+
+
 STORE button = select F-WING 2
 
 LEARN button = select F-WING 1
 
-EDIT button = OFf all executors (work when U click and hold EXIT button)
+EDIT button = Off all executors (work when U click and hold EXIT button)
 
 EXIT button = Clear command
 
