@@ -28,17 +28,6 @@ Turn on bcf300
 click exit (to exit from setup)
 
 
----- RUN code from command promt
-
-Open command promt (win+R CMD)
-
-go to my code folder
-
-
-to run my code type
-
-node bcf2000
-
 
 
 -------------------
@@ -49,7 +38,21 @@ U can run from icon (need change default tool to open dot2bcf200 file to node fr
 USE RMB - open with - and seleck node.exe from c program files / nodejs folder
 
 
--------------------
+
+------------------------------------
+
+U can RUN my code from command promt
+
+Open command promt (win+R CMD)
+
+go to my code folder
+
+
+to run my code type
+
+node bcf2000
+
+------------------------------------
 
 
 Version 1.2 what new
@@ -107,6 +110,12 @@ EXIT + EDIT = OFF ALL
 EXIT + Encoder click 4, 5 ,6 ,7 = Reset SpeedMatster
 
 EXIT + 8 encoder click = B.O. Toggle or flash mode
+
+
+
+
+
+<> arrow buttons to select PAGE (1-7)
 
 
 
