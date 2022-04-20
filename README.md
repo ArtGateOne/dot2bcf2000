@@ -2,7 +2,7 @@
 
 New version !!! 1.2
 
-This is code to control dot2 software use bcf200 midi controller.
+This is code to control dot2 software use bcf2000 midi controller.
 
 This version is compiled for NODEJS version 16.14.0
 
