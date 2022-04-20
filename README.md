@@ -137,7 +137,7 @@ Tpggle Exec Time
 Toggle Prog Time
 
 
-(exec time and prog time is not reas feedback)
+(exec time and prog time is not real led feedback)
 
 
 
