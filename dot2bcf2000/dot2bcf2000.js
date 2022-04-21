@@ -469,7 +469,7 @@ client.onerror = function () {
 
 client.onopen = function () {
   console.log('WebSocket Client Connected');
-
+  setInterval(interval, 80);
   function sendNumber() {
     if (client.readyState === client.OPEN) {
       var number = Math.round(Math.random() * 0xFFFFFF);
@@ -477,12 +477,12 @@ client.onopen = function () {
       setTimeout(sendNumber, 1000);
     }
   }
-  sendNumber();
+  //sendNumber();
 };
 
 client.onclose = function () {
   console.log('Client Closed');
-  setInterval(interval, 0);//80
+  setInterval(interval, 0);
   for (i = 0; i <= 127; i++) {
     output.send('noteon', { note: i, velocity: 0, channel: 0 });
     sleep(10, function () { });
