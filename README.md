@@ -115,7 +115,6 @@ EXIT + EDIT = OFF ALL
 
 EXIT + Encoder click 4, 5 ,6 ,7 = Reset SpeedMatster
 
-EXIT + 8 encoder click = B.O. Toggle or flash mode
 
 
 
