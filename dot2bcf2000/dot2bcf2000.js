@@ -1,4 +1,4 @@
-//dot2bcf2000 by ArtGateOne - version 1.2 20.04.2022
+//dot2bcf2000 v 1.3 by ArtGateOne
 
 var easymidi = require('easymidi');
 var W3CWebSocket = require('websocket')
