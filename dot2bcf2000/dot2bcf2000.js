@@ -1,4 +1,4 @@
-//dot2bcf2000 v 1.3 by ArtGateOne
+//dot2bcf2000 v 1.3.2 by ArtGateOne
 
 var easymidi = require('easymidi');
 var W3CWebSocket = require('websocket')
@@ -33,6 +33,7 @@ var sessionnr = 0;
 var pageIndex = 0;
 var wing = 1;
 var request = 0;
+var interval_on = 0;
 var controller = 0;
 var matrix = [213, 212, 211, 210, 209, 208, 207, 206, 113, 112, 111, 110, 109, 108, 107, 106, 13, 12, 11, 10, 9, 8, 7, 6, 13, 12, 11, 10, 9, 8, 7, 6];
 var exec = JSON.parse('{"index":[[5,4,3,2,1,0,0,0],[13,12,11,10,9,8,7,6],[21,20,19,18,17,16,15,14]]}');
@@ -542,7 +543,10 @@ client.onmessage = function (e) {
 
 
     if (obj.responseType == "login" && obj.result === true) {
-      setInterval(interval, 100);//80
+      if (interval_on == 0) {
+        interval_on = 1;
+        setInterval(interval, 100);//80
+    }
       console.log("...LOGGED");
       console.log("SESSION " + sessionnr);
       if (page_sw == 1) {
