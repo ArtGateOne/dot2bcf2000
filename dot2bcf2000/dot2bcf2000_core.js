@@ -13,14 +13,14 @@ var page_sw = 1;              //Auto Page switch on dot2  1 = ON, 0 = OFF
 var blackout_toggle_mode = 0; //BlackOut toggle mode    1 = ON, 0 = OFF
 var executors_view = 0;       //default executors view   0 = bottom, 1 = top
 
+var fader7 = "";
+var fader8 = "";
+
 
 //----------------------------------------------------------------------------------------------
 
-
-var testnote = 0;
 var exec_time = 0;
 var prog_time = 0;
-var clear = 0;
 var clear_button = 0;
 var speedmaster1 = 60;
 var speedmaster2 = 60;
@@ -31,7 +31,7 @@ var grandmaster = 100;
 var gmvalue = 43;
 var sessionnr = 0;
 var pageIndex = 0;
-var wing = 1;
+var wing = 0;
 var request = 0;
 var interval_on = 0;
 var controller = 0;
@@ -58,7 +58,7 @@ function interval() {
 
 
 //display info
-console.log("BCF2000 .2 WING " + wing);
+console.log("BCF2000 .2 CORE");
 console.log(" ");
 
 //display all midi devices
@@ -182,10 +182,32 @@ input.on('cc', function (msg) {
 
 
 input.on('pitch', function (msg) {//send fader pos do dot2
-  var faderValue = ((msg.value - 134) * 0.0000625)
-  if (msg.value <= 134) { faderValue = 0; }
-  if (faderValue > 1) { faderValue = 1; }
-  client.send('{"requestType":"playbacks_userInput","execIndex":' + exec.index[wing][msg.channel] + ',"pageIndex":' + pageIndex + ',"faderValue":' + (faderValue) + ',"type":1,"session":' + sessionnr + ',"maxRequests":0}');
+  if (wing == 0) {
+    if (msg.channel < 6) {
+      var faderValue = ((msg.value - 134) * 0.0000625)
+      if (msg.value <= 134) { faderValue = 0; }
+      if (faderValue > 1) { faderValue = 1; }
+      client.send('{"requestType":"playbacks_userInput","execIndex":' + exec.index[wing][msg.channel] + ',"pageIndex":' + pageIndex + ',"faderValue":' + (faderValue) + ',"type":1,"session":' + sessionnr + ',"maxRequests":0}');
+    } else if (msg.channel == 6) {
+      var faderValue = ((msg.value - 134) * 0.0000625)
+      if (msg.value <= 134) { faderValue = 0; }
+      if (faderValue > 1) { faderValue = 1; }
+      faderValue = faderValue * 100;
+      output.send('pitch', { value: msg.value, channel: 6 });
+      client.send('{"command":"SpecialMaster 1.1 At ' + (faderValue) + '","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
+    } else if (msg.channel == 7) {
+      var faderValue = ((msg.value - 134) * 0.00625)
+      if (msg.value <= 134) { faderValue = 0; }
+      if (faderValue > 100) { faderValue = 100; }
+      output.send('pitch', { value: msg.value, channel: 7 });
+      client.send('{"command":"SpecialMaster 1.2 At ' + (faderValue) + '","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
+    }
+  } else {
+    var faderValue = ((msg.value - 134) * 0.00625)
+    if (msg.value <= 134) { faderValue = 0; }
+    if (faderValue > 100) { faderValue = 100; }
+    client.send('{"requestType":"playbacks_userInput","execIndex":' + exec.index[wing][msg.channel] + ',"pageIndex":' + pageIndex + ',"faderValue":' + (faderValue) + ',"type":1,"session":' + sessionnr + ',"maxRequests":0}');
+  }
 });
 
 //send wing led status
@@ -197,6 +219,14 @@ if (wing == 1) {
   output.send('noteon', { note: 43, velocity: 0, channel: 0 });
   output.send('noteon', { note: 44, velocity: 127, channel: 0 });
   matrix = [221, 220, 219, 218, 217, 216, 215, 214, 121, 120, 119, 118, 117, 116, 115, 114, 21, 20, 19, 18, 17, 16, 15, 14, 21, 20, 19, 18, 17, 16, 15, 14];
+} else if (wing == 0){
+  output.send('noteon', { note: 43, velocity: 0, channel: 0 });
+  output.send('noteon', { note: 44, velocity: 0, channel: 0 });
+  output.send('noteon', { note: 92, velocity: 127, channel: 0 });
+  output.send('noteon', { note: 94, velocity: 127, channel: 0 });
+  matrix = [205, 204, 203, 202, 201, 200, 0, 0, 105, 104, 103, 102, 101, 100, 0, 0, 5, 4, 3, 2, 1, 0, 0, 0, 5, 4, 3, 2, 1, 0, 0, 0];
+  output.send('pitch', { value: 16368, channel: 6 });
+  output.send('pitch', { value: 0, channel: 7 });
 }
 
 
@@ -235,7 +265,9 @@ input.on('noteon', function (msg) {
 
 
   if (msg.note <= 31) {//send buttons to dot2
-    if (executors_view == 0) {
+    if (msg.note == 22 || msg.note == 23 || msg.note == 30 || msg.note == 31){
+      //do nothing
+    } else if (executors_view == 0) {
       if (msg.note < 24) {
         if (msg.velocity === 127) {
           client.send('{"requestType":"playbacks_userInput","cmdline":"","execIndex":' + matrix[msg.note] + ',"pageIndex":' + pageIndex + ',"buttonId":0,"pressed":true,"released":false,"type":0,"session":' + sessionnr + ',"maxRequests":0}');
@@ -351,14 +383,14 @@ input.on('noteon', function (msg) {
     }
   }
 
-  if (msg.note == 43 && msg.velocity == 127) {//wing1
+  if (msg.note == 43 && msg.velocity == 127 && wing != 0) {//wing1
     wing = 1;
     output.send('noteon', { note: 43, velocity: 127, channel: 0 });
     output.send('noteon', { note: 44, velocity: 0, channel: 0 });
     matrix = [213, 212, 211, 210, 209, 208, 207, 206, 113, 112, 111, 110, 109, 108, 107, 106, 13, 12, 11, 10, 9, 8, 7, 6, 13, 12, 11, 10, 9, 8, 7, 6];
   }
 
-  if (msg.note == 44 && msg.velocity == 127) {//wing2
+  if (msg.note == 44 && msg.velocity == 127 && wing != 0) {//wing2
     wing = 2;
     output.send('noteon', { note: 43, velocity: 0, channel: 0 });
     output.send('noteon', { note: 44, velocity: 127, channel: 0 });
@@ -431,13 +463,7 @@ input.on('noteon', function (msg) {
   }
 
   if (msg.note == 92 && msg.velocity == 127) {//exec time toggle
-    if (exec_time == 0) {
-      exec_time = 127;
-    } else {
-      exec_time = 0;
-    }
-    output.send('noteon', { note: 92, velocity: exec_time, channel: 0 });
-    client.send('{"command":"Toggle SpecialMaster 2.3","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
+    client.send('{"command":"DefGoBack","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
   }
 
   if (msg.note == 93 && msg.velocity == 127) {//bottom 
@@ -447,13 +473,7 @@ input.on('noteon', function (msg) {
   }
 
   if (msg.note == 94 && msg.velocity == 127) {//prog time toggle
-    if (prog_time == 0) {
-      prog_time = 127;
-    } else {
-      prog_time = 0;
-    }
-    output.send('noteon', { note: 94, velocity: prog_time, channel: 0 });
-    client.send('{"command":"Toggle SpecialMaster 2.2","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
+    client.send('{"command":"DefGoForward","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
   }
 
 });
@@ -546,7 +566,7 @@ client.onmessage = function (e) {
       if (interval_on == 0) {
         interval_on = 1;
         setInterval(interval, 100);//80
-    }
+      }
       console.log("...LOGGED");
       console.log("SESSION " + sessionnr);
       if (page_sw == 1) {
@@ -563,8 +583,8 @@ client.onmessage = function (e) {
 
 
     if (obj.responseType == "playbacks") {//recive data from dot & set to BCF
-      var channel = 7;
-      for (var i = 0; i < 8; i++) {
+      var channel = 5;
+      for (var i = 0; i < 6; i++) {
         if (executors_view == 0) {
           output.send('noteon', { note: (channel), velocity: ((obj.itemGroups[2].items[i][0].isRun) * 127), channel: 0 });//executor top 
           output.send('noteon', { note: ((channel) + 8), velocity: ((obj.itemGroups[1].items[i][0].isRun) * 127), channel: 0 });//executor top
