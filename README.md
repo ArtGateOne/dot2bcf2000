@@ -1,13 +1,13 @@
 # dot2bcf2000
 
-New version !!! 1.2
+New version !!! 1.4
 
 This is code to control dot2 software use bcf2000 midi controller.
 
-This version is compiled for NODEJS version 16.14.0
+This version is compiled for NODEJS version 14.17.0
 
 
-U need download and install nodejs https://nodejs.org/dist/v16.14.2/node-v16.14.2-x64.msi
+Download and instal NODEJS version 14.17 from https://nodejs.org/dist/v14.17.0/node-v14.17.0-x64.msi
 
 
 
@@ -55,12 +55,12 @@ node bcf2000
 ------------------------------------
 
 
-Version 1.2 what new
+Version 1.4
 
 
 Encoder 1-8
 
-1 rotate = DIM
+1 rotate = DIM, click = Highlight
 
 2 rotate = PAN, click = PAN center
 
@@ -102,6 +102,8 @@ STORE button = select F-WING 2
 
 LEARN button = select F-WING 1
 
+If STORE OR LEARN LED is off = CORE
+
 EDIT button = Off all executors (work when U click and hold EXIT button)
 
 EXIT button = Clear command
@@ -131,12 +133,10 @@ Select view and control TOP executors
 
 Select and view Botton Executors
 
-Tpggle Exec Time
+GO BACK
 
-Toggle Prog Time
+GO FORWARD
 
-
-(exec time and prog time is not real led feedback)
 
 
 
