@@ -1,4 +1,4 @@
-//dot2bcf2000 v 1.4.0 by ArtGateOne
+//dot2bcf2000 v 1.4.1 by ArtGateOne
 
 var easymidi = require('easymidi');
 var W3CWebSocket = require('websocket')
@@ -331,6 +331,7 @@ input.on('noteon', function (msg) {
     if (msg.note == 35 && msg.velocity == 127) {//4 enc click (learn speedmaster 1)/Reset
         if (clear_button == 1) {
             client.send('{"command":"Rate1 SpecialMaster 3.1","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
+            speedmaster1 = 60;
         } else {
             client.send('{"command":"Learn SpecialMaster 3.1","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
         }
@@ -338,6 +339,7 @@ input.on('noteon', function (msg) {
     if (msg.note == 36 && msg.velocity == 127) {//5 enc click (learn speedmaster 2)/Reset
         if (clear_button == 1) {
             client.send('{"command":"Rate1 SpecialMaster 3.2","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
+            speedmaster2 = 60;
         } else {
             client.send('{"command":"Learn SpecialMaster 3.2","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
         }
@@ -346,6 +348,7 @@ input.on('noteon', function (msg) {
     if (msg.note == 37 && msg.velocity == 127) {//6 enc click (learn speedmaster 3)/Reset
         if (clear_button == 1) {
             client.send('{"command":"Rate1 SpecialMaster 3.3","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
+            speedmaster3 = 60;
         } else {
             client.send('{"command":"Learn SpecialMaster 3.3","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
         }
@@ -354,6 +357,7 @@ input.on('noteon', function (msg) {
     if (msg.note == 38 && msg.velocity == 127) {//7 enc click (learn speedmaster 4)/Reset
         if (clear_button == 1) {
             client.send('{"command":"Rate1 SpecialMaster 3.4","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
+            speedmaster4 = 60;
         } else {
             client.send('{"command":"Learn SpecialMaster 3.4","session":' + sessionnr + ',"requestType":"command","maxRequests":0}');
         }
